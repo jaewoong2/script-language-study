@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "NOTING | Save Your AI`s Conversation ",
+    "version": "1.0.3",
+    "description": "Noting Can lets you effortlessly save and organize your ChatGPT conversations with tags.",
+    "permissions": [
+      "storage",
+      "identity"
+    ],
+    "background": {
+      "type": "module",
+      "service_worker": "background.js"
+    },
+    "externally_connectable": {
+      "matches": ["https://*.prlc.kr/*", "https://noting.prlc.kr/*", "http://localhost:*/*"]
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "http://localhost:*/*",
+          "https://*.chatgpt.com/*",
+          "https://chatgpt.com/*",
+          "https://*.prlc.kr/*",
+          "https://noting.prlc.kr/*"
+        ],
+        "type": "module",
+        "js": ["content.js"],
+        "run_at": "document_idle"
+      }
+    ],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": {
+        "16": "icons/icon.png",
+        "48": "icons/icon.png",
+        "128": "icons/icon.png"
+      }
+    },
+    "oauth2": {
+    "client_id": "444011025-o823lmh9emeiqfe6alrfg4l5qhvlt71d.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email"
+    ]
+  }
+  }
+  
