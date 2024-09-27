@@ -86,6 +86,7 @@ export default {
       fontFamily: {
         Freesentation: ["FreesentationL"],
         FreesentationB: ["FreesentationB"],
+        Playwrite: ["Playwrite CA"],
       },
       borderRadius: {
         lg: "var(--radius)",

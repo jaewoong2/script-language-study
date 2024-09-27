@@ -7,11 +7,14 @@ const LogoIcon = ({ ...props }: Props) => {
   return (
     <Avatar className="!tw-w-full tw-h-full tw-rounded-none tw-p-4">
       <AvatarImage
-        className="tw-object-contain tw-drop-shadow-[1px_1px_1px_#606060da]"
-        src="https://images.prlc.kr/images/ytb-logo.png"
+        className="tw-object-contain"
+        // className="tw-object-contain tw-drop-shadow-[1px_1px_1px_#606060da]"
+        src="https://images.prlc.kr/images/ghost343.png"
         alt="@shadcn"
       />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarFallback className="tw-font-Playwrite tw-text-xs tw-bg-transparent tw-drop-shadow-[1px_1px_1px_#606060da] tw-text-orange-500 tw-font-semibold">
+        O3O
+      </AvatarFallback>
     </Avatar>
   );
 };

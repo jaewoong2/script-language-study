@@ -46,7 +46,7 @@ const initaldata: TranscriptContextType = {
     title: import.meta.env.DEV ? "InitData" : "",
     views: "0",
     thumbnail: import.meta.env.DEV
-      ? "https://i.ytimg.com/vi/4a0dll2RzpE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC29C3Z4weN91X78_0QpmkHP9G7Iw"
+      ? "https://i.ytimg.com/vi/sG5rmHBiruI/hqdefault.jpg?sqp=-oaymwExCOADEI4CSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYVyBiKGUwDw==&rs=AOn4CLCTLLn4nByOU5MYsPi8lVLn68BRDg"
       : "",
   },
   current: import.meta.env.DEV

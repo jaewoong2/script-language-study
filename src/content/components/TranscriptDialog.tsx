@@ -48,19 +48,19 @@ const TranscriptDialog = ({ children }: PropsWithChildren) => {
       <DialogButton
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          "!tw-p-1 hover:tw-bg-orange-200 tw-transition",
-          "tw-aspect-square tw-flex tw-justify-center tw-items-center tw-h-[56px] tw-w-[56px] !tw-rounded-[24px] tw-text-2xl tw-shadow-md"
+          "!tw-p-1 hover:tw-bg-orange-200 tw-transition tw-overflow-hidden tw-bg-orange-200",
+          "tw-aspect-square tw-flex tw-justify-center tw-items-center tw-h-[54px] tw-w-[54px] !tw-rounded-[24px] tw-text-2xl tw-shadow-md"
         )}
       >
         {isOpen ? (
           <motion.p
-            className="tw-text-xl tw-text-black tw-font-FreesentationB"
+            className="tw-text-4xl tw-text-gray-900 tw-font-Freesentation tw-font-light"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3 }}
           >
-            닫기
+            &times;
           </motion.p>
         ) : (
           <motion.div

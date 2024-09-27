@@ -78,7 +78,11 @@ const TranscriptContent: React.FC<Props> = ({ type, page }) => {
   }
 
   if (!contents[type] || contents[type].length === 0) {
-    return <p className="tw-text-gray-500 tw-px-2">No content available.</p>;
+    return (
+      <p className="tw-text-gray-500 tw-px-2 tw-w-full tw-justify-center tw-flex">
+        마지막 페이지 입니다.
+      </p>
+    );
   }
 
   return contents[type].map(({ meaning, text }, index) => (

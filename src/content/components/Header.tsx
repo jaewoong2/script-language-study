@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     // <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-py-2 tw-text-3xl tw-text-black tw-font-Freesentation tw-z-[1005]">
-    <div className="tw-flex tw-w-full tw-justify-end tw-gap-1 tw-px-4">
+    <div className="tw-flex tw-w-full tw-justify-end tw-gap-1">
       <Select onValueChange={handleCurrentLangauge} value={current.language}>
         <SelectTrigger className="tw-w-[180px] tw-bg-white tw-z-[20000000000000] tw-py-6 tw-rounded-xl">
           <SelectValue placeholder="Select a Language" />
