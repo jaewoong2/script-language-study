@@ -1,8 +1,11 @@
-import React from "react";
+import React from 'react';
 
 type Props = {};
 
-const BookOpen = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+const BookOpen = ({
+  className,
+  ...props
+}: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

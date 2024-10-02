@@ -35,21 +35,13 @@ export default {
       },
       colors: {
         primary: {
-          light: "#a78bfa",
           DEFAULT: "hsl(var(--primary))",
-          dark: "#7c3aed",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          light: "#f9a8d4",
           DEFAULT: "hsl(var(--secondary))",
-          dark: "#ec4899",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        chollianBg: "#000033",
-        chollianText: "#33FF33",
-        chollianAccent: "#00FFFF",
-        chollianYellow: "#FFFF00",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -86,7 +78,7 @@ export default {
       fontFamily: {
         Freesentation: ["FreesentationL"],
         FreesentationB: ["FreesentationB"],
-        Playwrite: ["Playwrite CA"],
+        Roboto: ["Roboto"],
       },
       borderRadius: {
         lg: "var(--radius)",

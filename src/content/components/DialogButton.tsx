@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   AnimatePresence,
   ForwardRefComponent,
   HTMLMotionProps,
   motion,
-} from "framer-motion";
-import { cn } from "@/lib/utils";
-import StarIcon from "./icons/StarIcon";
+} from 'framer-motion';
+import { cn } from '@/lib/utils';
+import StarIcon from './icons/StarIcon';
 
 interface StarProps {
   id: number;
@@ -15,14 +15,18 @@ interface StarProps {
   onComplete: (id: number) => void;
 }
 
-const Star: React.FC<StarProps> = ({ x, y, onComplete }) => {
+const Star: React.FC<StarProps> = ({
+  x,
+  y,
+  onComplete,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 1, x: 0, y: 0, scale: 0.5 }}
       animate={{ opacity: 1, x: x, y: y, scale: 0.7 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      transition={{ duration: 0.7, ease: 'easeOut' }}
       onAnimationComplete={() => onComplete(0)}
-      className="tw-absolute tw-text-yellow-200 tw-drop-shadow-[1px_1px_1px_#6a6a6a85]"
+      className="tw-absolute tw-text-yellow-800 tw-drop-shadow-[1px_1px_1px_#6a6a6a85]"
     >
       <StarIcon />
     </motion.div>
@@ -33,7 +37,7 @@ const DialogButton = ({
   children,
   className,
   ...props
-}: HTMLMotionProps<"button">) => {
+}: HTMLMotionProps<'button'>) => {
   const [stars, setStars] = useState<number[]>([]);
 
   // Generate random positions for stars
@@ -49,8 +53,8 @@ const DialogButton = ({
     <div className="tw-relative tw-flex tw-items-center tw-justify-center">
       <motion.button
         className={cn(
-          "tw-bg-gradient-to-b tw-from-orange-200 tw-to-yellow-100 tw-relative",
-          className
+          'tw-relative tw-bg-yellow-900',
+          className,
         )}
         {...props}
         onClick={(e) => {

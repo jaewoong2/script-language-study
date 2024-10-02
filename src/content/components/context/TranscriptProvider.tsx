@@ -1,8 +1,6 @@
-"use client";
-
-import { YouTubeVideo } from "@/content/controller/videoContorller";
-import useTitleChange from "@/content/hooks/useTitleChange";
-import { getLanguageFullName, INITIAL_DATA } from "@/utils";
+import { YouTubeVideo } from '@/content/controller/videoContorller';
+import useTitleChange from '@/content/hooks/useTitleChange';
+import { getLanguageFullName } from '@/utils';
 import {
   createContext,
   PropsWithChildren,
@@ -11,11 +9,12 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import { useLocation } from "react-router-dom";
+} from 'react';
 
 export type TranscriptContextType = {
-  transcript: { languageCode: string; script: string[] }[] | null;
+  transcript:
+    | { languageCode: string; script: string[] }[]
+    | null;
   metadata: {
     key: string;
     thumbnail: string;
@@ -34,27 +33,27 @@ export type TranscriptContextType = {
 const initaldata: TranscriptContextType = {
   transcript: import.meta.env.DEV
     ? [
-        { languageCode: "ja", script: INITIAL_DATA },
-        { languageCode: "ko", script: INITIAL_DATA },
+        { languageCode: 'ja', script: [''] },
+        { languageCode: 'ko', script: [''] },
       ]
     : [],
   metadata: {
-    key: import.meta.env.DEV ? "4a0dll2RzpE" : "",
+    key: import.meta.env.DEV ? '4a0dll2RzpE' : '',
     page: 1,
-    author: import.meta.env.DEV ? "InitData" : "",
+    author: import.meta.env.DEV ? 'InitData' : '',
     duration: 0,
-    title: import.meta.env.DEV ? "InitData" : "",
-    views: "0",
+    title: import.meta.env.DEV ? 'InitData' : '',
+    views: '0',
     thumbnail: import.meta.env.DEV
-      ? "https://i.ytimg.com/vi/sG5rmHBiruI/hqdefault.jpg?sqp=-oaymwExCOADEI4CSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYVyBiKGUwDw==&rs=AOn4CLCTLLn4nByOU5MYsPi8lVLn68BRDg"
-      : "",
+      ? 'https://i.ytimg.com/vi/sG5rmHBiruI/hqdefault.jpg?sqp=-oaymwExCOADEI4CSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYVyBiKGUwDw==&rs=AOn4CLCTLLn4nByOU5MYsPi8lVLn68BRDg'
+      : '',
   },
   current: import.meta.env.DEV
     ? {
-        language: getLanguageFullName("ja"),
+        language: getLanguageFullName('ja'),
         page: 1,
       }
-    : { language: "", page: 1 },
+    : { language: '', page: 1 },
 };
 
 type TranscriptActionContextType = {
@@ -69,9 +68,8 @@ type TranscriptActionContextType = {
   extractScript: (page: number) => string;
 };
 
-const TranscriptContext = createContext<TranscriptContextType | null>(
-  initaldata
-);
+const TranscriptContext =
+  createContext<TranscriptContextType | null>(initaldata);
 
 const TranscriptActionContext =
   createContext<TranscriptActionContextType | null>(null);
@@ -80,7 +78,7 @@ export const useTranscriptContext = () => {
   const context = useContext(TranscriptContext);
 
   if (!context) {
-    throw new Error("Needs Transcript-Context Provider");
+    throw new Error('Needs Transcript-Context Provider');
   }
 
   return context;
@@ -90,48 +88,62 @@ export const useTranscriptActionContext = () => {
   const context = useContext(TranscriptActionContext);
 
   if (!context) {
-    throw new Error("Needs Transcript-Context Provider");
+    throw new Error('Needs Transcript-Context Provider');
   }
 
   return context;
 };
 
-function TranscriptContextProvider({ children }: PropsWithChildren) {
-  const [search, setSearch] = useState(window.location.search);
+function TranscriptContextProvider({
+  children,
+}: PropsWithChildren) {
+  const [search, setSearch] = useState(
+    window.location.search,
+  );
   const [transcript, setTranscript] = useState<
-    TranscriptContextType["transcript"]
+    TranscriptContextType['transcript']
   >(initaldata.transcript);
-  const [metadata, setMetadata] = useState<TranscriptContextType["metadata"]>(
-    initaldata.metadata
-  );
-  const [current, setCurrent] = useState<TranscriptContextType["current"]>(
-    initaldata.current
-  );
+  const [metadata, setMetadata] = useState<
+    TranscriptContextType['metadata']
+  >(initaldata.metadata);
+  const [current, setCurrent] = useState<
+    TranscriptContextType['current']
+  >(initaldata.current);
 
   const handleCurrentLangauge = (language: string) => {
     setCurrent((prev) =>
-      language === prev.language ? prev : { page: 1, language }
+      language === prev.language
+        ? prev
+        : { page: 1, language },
     );
   };
 
   const handleNextPage = () => {
-    setCurrent((prev) => ({ ...prev, page: prev.page + 1 }));
+    setCurrent((prev) => ({
+      ...prev,
+      page: prev.page + 1,
+    }));
   };
 
   const extractScript = useCallback(
     (page: number): string => {
-      if (!transcript || !current.language) return "";
+      if (!transcript || !current.language) return '';
 
       const scriptSegments = transcript
         .filter(
           ({ languageCode }) =>
-            getLanguageFullName(languageCode) === current.language
+            getLanguageFullName(languageCode) ===
+            current.language,
         )
-        .flatMap(({ script }) => script.slice(page * 100, (page + 1) * 100));
+        .flatMap(({ script }) =>
+          script.slice(page * 50, (page + 1) * 50),
+        );
 
-      return scriptSegments.length > 0 ? scriptSegments.join(" ") : "";
+      return scriptSegments.length > 0
+        ? scriptSegments.join(' ')
+        : '';
     },
-    [transcript, current]
+    [transcript, current],
   );
 
   const value = useMemo(
@@ -140,7 +152,7 @@ function TranscriptContextProvider({ children }: PropsWithChildren) {
       metadata,
       current,
     }),
-    [transcript, metadata, current]
+    [transcript, metadata, current],
   );
 
   const action = useMemo(
@@ -150,7 +162,7 @@ function TranscriptContextProvider({ children }: PropsWithChildren) {
       handleCurrentLangauge,
       handleNextPage,
     }),
-    [setCurrent, handleCurrentLangauge, handleNextPage]
+    [setCurrent, handleCurrentLangauge, handleNextPage],
   );
 
   useTitleChange(() => {
@@ -159,15 +171,18 @@ function TranscriptContextProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     (async function () {
-      const videoId = new URLSearchParams(search).get("v");
+      const videoId = new URLSearchParams(search).get('v');
 
       if (videoId) {
         const video = new YouTubeVideo();
         try {
-          const result = await video.retrieveTranscript(videoId);
+          const result =
+            await video.retrieveTranscript(videoId);
           if (result) {
             setCurrent({
-              language: getLanguageFullName(result.transcript[0].languageCode),
+              language: getLanguageFullName(
+                result.transcript[0].languageCode,
+              ),
               page: 1,
             });
             setTranscript(result.transcript);
@@ -181,7 +196,7 @@ function TranscriptContextProvider({ children }: PropsWithChildren) {
           console.error(error);
         }
       } else {
-        console.error("No video ID found in URL.");
+        console.error('No video ID found in URL.');
         setTranscript(initaldata.transcript);
         setMetadata(initaldata?.metadata);
       }

@@ -113,7 +113,7 @@ export class YouTubeVideo {
     const player: PlayerResponse = JSON.parse(playerResponse[1]);
 
     const metadata = {
-      thumbnail: player.videoDetails.thumbnail.thumbnails[2].url,
+      thumbnail: player.videoDetails.thumbnail.thumbnails[3].url,
       title: player.videoDetails.title,
       duration: player.videoDetails.lengthSeconds,
       author: player.videoDetails.author,

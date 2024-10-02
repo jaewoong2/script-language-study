@@ -4,7 +4,7 @@ import React from "react";
 const StarIcon = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      className={cn("tw-w-8 tw-h-8 tw-text-orange-400 tw-me-1", className)}
+      className={cn("tw-w-8 tw-h-8 tw-text-amber-700 tw-me-1", className)}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"

@@ -1,6 +1,6 @@
 // app/provider.tsx
 
-"use client";
+'use client';
 
 import {
   createContext,
@@ -8,7 +8,7 @@ import {
   SetStateAction,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -18,13 +18,17 @@ export const ThemeContext = createContext<{
   setTheme: Dispatch<SetStateAction<string | null>>;
 } | null>(null);
 
-export default function ThemeProvider({ children }: ThemeProviderProps) {
+export default function ThemeProvider({
+  children,
+}: ThemeProviderProps) {
   const [theme, setTheme] = useState<string | null>(null);
 
   useEffect(function initialize() {
-    const storedTheme = localStorage.getItem("theme") ?? "";
+    const storedTheme = localStorage.getItem('theme') ?? '';
     setTheme(storedTheme);
-    document.querySelector("html")?.setAttribute("data-theme", storedTheme);
+    document
+      .querySelector('html')
+      ?.setAttribute('data-theme', storedTheme);
   }, []);
 
   useEffect(
@@ -33,20 +37,22 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
         return;
       }
 
-      document.querySelector("html")?.setAttribute("data-theme", theme);
+      document
+        .querySelector('html')
+        ?.setAttribute('data-theme', theme);
 
-      if (theme === "") {
-        localStorage.removeItem("theme");
+      if (theme === '') {
+        localStorage.removeItem('theme');
         return;
       }
 
-      localStorage.setItem("theme", theme);
+      localStorage.setItem('theme', theme);
     },
-    [theme]
+    [theme],
   );
 
   if (theme === null) {
-    return "로딩중...";
+    return '로딩중...';
   }
 
   return (
