@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
+
 import {
   useTranscriptActionContext,
   useTranscriptContext,
 } from './context/TranscriptProvider';
 import {
-  useGetTransalteRecommend,
+  useGetTranslateRecommend,
   useTranslateRecommend,
 } from '@/api/translate/useTranslateService';
-import useTranscriptData from '../hooks/useTranscriptData';
-import { motion } from 'framer-motion';
 import TextSpinnerLoader from './TextSpinnerLoader';
+import TranscriptItem from './TranscriptItem';
+import { parseSingleData } from '@/utils';
 
 type Props = {
   type: 'words' | 'sentences';
@@ -24,36 +26,32 @@ const TranscriptContent: React.FC<Props> = ({
   const { mutate, isPending } = useTranslateRecommend();
   const { handleNextPage, extractScript } =
     useTranscriptActionContext();
-  const [isMount, setIsMount] = useState(false);
   const extractedScript = extractScript(page);
 
   const { data, isError, isLoading } =
-    useGetTransalteRecommend(
+    useGetTranslateRecommend(
       {
         key: `${metadata?.key}`,
         page,
         language: current.language,
       },
       {
-        enabled:
-          !isPending &&
-          isMount &&
-          extractedScript.trim() !== '',
         gcTime: Infinity,
         staleTime: Infinity,
         retry: 1,
       },
     );
 
-  const contents = useTranscriptData({
-    dataString: data?.data.data.contents ?? '',
-  });
+  const contents = parseSingleData(
+    data?.data.data.contents ?? '',
+  );
 
   useEffect(() => {
     if (metadata && isError) {
       if (!extractedScript) return;
 
       mutate({
+        status: 'QUEUE',
         language: current.language,
         category: 'video',
         page,
@@ -62,18 +60,6 @@ const TranscriptContent: React.FC<Props> = ({
       });
     }
   }, [current, page, metadata, isError, extractedScript]);
-
-  useEffect(() => {
-    if (isLoading) {
-      setIsMount(false);
-      return;
-    }
-
-    if (!isLoading) {
-      setIsMount(true);
-      return;
-    }
-  }, [isLoading]);
 
   if (isLoading || isPending) {
     return (
@@ -91,42 +77,25 @@ const TranscriptContent: React.FC<Props> = ({
     );
   }
 
-  return contents[type].map(({ meaning, text }, index) => (
-    <motion.div
-      key={`${text}-${index}-content`}
-      onViewportEnter={() => {
-        if (
-          !isLoading &&
-          current.page === page + 1 &&
-          index === contents[type].length - 1
-        ) {
-          handleNextPage();
-        }
-      }}
-    >
-      <TranscriptItem text={text} meaning={meaning} />
-    </motion.div>
-  ));
+  return (
+    <ul>
+      {contents[type].map(({ meaning, text }, index) => (
+        <motion.li
+          key={`${text}-${index}-content`}
+          onViewportEnter={() => {
+            if (
+              current.page === page + 1 &&
+              index === contents[type].length - 1
+            ) {
+              handleNextPage();
+            }
+          }}
+        >
+          <TranscriptItem text={text} meaning={meaning} />
+        </motion.li>
+      ))}
+    </ul>
+  );
 };
-
-type TranscriptItemProps = {
-  text: string;
-  meaning: string;
-};
-
-const TranscriptItem: React.FC<TranscriptItemProps> = ({
-  text,
-  meaning,
-}) => (
-  <>
-    <li className="tw-relative tw-flex tw-flex-col tw-items-start tw-text-wrap tw-px-2 tw-text-start">
-      <div className="dark:tw-text-secondary-light tw-font-Roboto tw-text-base tw-text-blue-700">
-        -{text}
-      </div>
-      <p className="tw-text-start tw-text-sm">{meaning}</p>
-    </li>
-    <div className="tw-my-1 tw-h-px tw-w-full tw-bg-zinc-200" />
-  </>
-);
 
 export default TranscriptContent;

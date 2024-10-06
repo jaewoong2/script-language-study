@@ -1,20 +1,19 @@
-import { PropsWithChildren, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Header from "./Header";
-import {
-  useTranscriptActionContext,
-  useTranscriptContext,
-} from "./context/TranscriptProvider";
-import { getLanguageFullName } from "@/utils";
-import LogoIcon from "./icons/LogoIcon";
-import { useLocalStorage } from "usehooks-ts";
-import { cn } from "@/lib/utils";
-import DialogButton from "./DialogButton";
+import { PropsWithChildren } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTranscriptContext } from './context/TranscriptProvider';
+import LogoIcon from './icons/LogoIcon';
+import { useLocalStorage } from 'usehooks-ts';
+import { cn } from '@/lib/utils';
+import DialogButton from './DialogButton';
 
-const TranscriptDialog = ({ children }: PropsWithChildren) => {
-  const { transcript, current, metadata } = useTranscriptContext();
-  const { handleCurrentLangauge } = useTranscriptActionContext();
-  const [isOpen, setIsOpen] = useLocalStorage("isOpen", false);
+const TranscriptDialog = ({
+  children,
+}: PropsWithChildren) => {
+  const { metadata } = useTranscriptContext();
+  const [isOpen, setIsOpen] = useLocalStorage(
+    'isOpen',
+    false,
+  );
 
   if (!metadata?.key) {
     return null;
@@ -25,7 +24,7 @@ const TranscriptDialog = ({ children }: PropsWithChildren) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="tw-flex tw-items-center tw-justify-center tw-h-fit tw-flex-col"
+            className="tw-flex tw-h-fit tw-flex-col tw-items-center tw-justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
@@ -33,7 +32,7 @@ const TranscriptDialog = ({ children }: PropsWithChildren) => {
             onClick={() => setIsOpen(false)}
           >
             <motion.div
-              className="tw-flex tw-items-center tw-justify-end tw-flex-col"
+              className="tw-flex tw-flex-col tw-items-center tw-justify-end"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -48,13 +47,13 @@ const TranscriptDialog = ({ children }: PropsWithChildren) => {
       <DialogButton
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          "!tw-p-1  tw-overflow-hidden ",
-          "tw-aspect-square tw-flex tw-justify-center tw-items-center tw-h-[54px] tw-w-[54px] !tw-rounded-[24px] tw-text-2xl tw-shadow-md"
+          'tw-overflow-hidden !tw-p-1',
+          'tw-flex tw-aspect-square tw-h-[54px] tw-w-[54px] tw-items-center tw-justify-center !tw-rounded-[24px] tw-text-2xl tw-shadow-md',
         )}
       >
         {isOpen ? (
           <motion.p
-            className="tw-text-4xl tw-text-white tw-font-Freesentation tw-font-light"
+            className="tw-font-Freesentation tw-text-4xl tw-font-light tw-text-white"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}

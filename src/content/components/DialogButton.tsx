@@ -65,11 +65,11 @@ const DialogButton = ({
         {children}
       </motion.button>
       <AnimatePresence>
-        {stars.map((id) => {
+        {stars.map((id, index) => {
           const { x, y } = generatePositions();
           return (
             <Star
-              key={id}
+              key={`${id}-${index}`}
               id={id}
               x={x}
               y={y}

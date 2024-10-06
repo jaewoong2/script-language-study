@@ -1,7 +1,7 @@
 import { motion, useAnimate } from 'framer-motion';
 import { useEffect } from 'react';
 
-export default function SpotlightLoader() {
+export default function TextSpinnerLoader() {
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
@@ -13,10 +13,6 @@ export default function SpotlightLoader() {
       await animate(
         [
           [scope.current, { x: 0, width: '0%' }],
-          [
-            scope.current,
-            { x: containerWidth / 2, width: '50%' },
-          ],
           [
             scope.current,
             { x: containerWidth, width: '95%' },
@@ -38,7 +34,7 @@ export default function SpotlightLoader() {
     <div className="tw-relative tw-h-8">
       <motion.div
         ref={scope}
-        className="tw-absolute tw-bottom-0 tw-h-full tw-bg-black"
+        className="tw-absolute tw-bottom-0 tw-h-full tw-bg-yellow-900"
       />
       <span className="tw-whitespace-nowrap tw-text-white tw-mix-blend-screen">
         <i className="tw-text-xs">Loading...</i>

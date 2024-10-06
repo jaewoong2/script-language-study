@@ -1,7 +1,4 @@
 // app/provider.tsx
-
-'use client';
-
 import {
   createContext,
   Dispatch,

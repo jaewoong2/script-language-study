@@ -1,18 +1,19 @@
 import {
   UseMutationOptions,
   useMutation,
+  useQueries,
   useQuery,
   useQueryClient,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
-import queryOptions from "./queries";
+import queryOptions from './queries';
 
 import {
   GetTranslateRecommendRequestParams,
   PostTranslateRecommendRequestParams,
   PostTranslateRecommendResponse,
-} from "./type";
-import { AxiosResponse } from "axios";
+} from './type';
+import { AxiosResponse } from 'axios';
 
 export function useTranslateRecommend(
   options?: UseMutationOptions<
@@ -20,7 +21,7 @@ export function useTranslateRecommend(
     Error,
     PostTranslateRecommendRequestParams,
     unknown
-  >
+  >,
 ) {
   const queryClient = useQueryClient();
 
@@ -35,21 +36,47 @@ export function useTranslateRecommend(
         predicate: (query) => {
           const { key, page, language } = variables;
 
-          return query.queryKey.includes(`${key}-${language}-${page}`);
+          return query.queryKey.includes(
+            `${key}-${language}-${page}`,
+          );
         },
       });
     },
   });
 }
 
-type GetTranslateRecommendType = ReturnType<typeof queryOptions.getRecommend>;
+type GetTranslateRecommendType = ReturnType<
+  typeof queryOptions.getRecommend
+>;
 
-export function useGetTransalteRecommend(
-  { key, page, language }: GetTranslateRecommendRequestParams,
-  options?: Omit<GetTranslateRecommendType, "queryFn" | "queryKey">
+export function useGetTranslateRecommend(
+  {
+    key,
+    page,
+    language,
+  }: GetTranslateRecommendRequestParams,
+  options?: Omit<
+    GetTranslateRecommendType,
+    'queryFn' | 'queryKey'
+  >,
 ) {
   return useQuery({
     ...queryOptions.getRecommend({ key, page, language }),
     ...options,
+  });
+}
+
+export function useGetTranslateRecommends(
+  params: GetTranslateRecommendRequestParams[],
+  options?: Omit<
+    GetTranslateRecommendType,
+    'queryFn' | 'queryKey'
+  >,
+) {
+  return useQueries({
+    queries: params.map(({ key, language, page }) => ({
+      ...queryOptions.getRecommend({ key, page, language }),
+      ...options,
+    })),
   });
 }

@@ -19,8 +19,12 @@ export class PageMetaDto {
 
   readonly hasNextPage: boolean;
 
-  constructor({ pageOptionsDto, total }: PageMetaDtoParameters) {
-    this.page = pageOptionsDto.page <= 0 ? 1 : pageOptionsDto.page;
+  constructor({
+    pageOptionsDto,
+    total,
+  }: PageMetaDtoParameters) {
+    this.page =
+      pageOptionsDto.page <= 0 ? 1 : pageOptionsDto.page;
     this.take = pageOptionsDto.take;
     this.total = total;
     this.last_page = Math.ceil(this.total / this.take);
@@ -56,6 +60,7 @@ export type PostTranslateRecommendRequestParams = {
   script: string; // yotubue script
   language: string; // from languae (e.g. => kr, en, jp, cn)
   page: number;
+  status: 'QUEUE' | 'DONE' | 'NULL';
 };
 
 export type PostTranslateRecommendResponse = {

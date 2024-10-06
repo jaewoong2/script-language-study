@@ -28,12 +28,17 @@ export type TranscriptContextType = {
     language: string;
     page: number;
   };
+  isLoading: boolean;
+  totalPages: number;
 };
 
 const initaldata: TranscriptContextType = {
   transcript: import.meta.env.DEV
     ? [
-        { languageCode: 'ja', script: [''] },
+        {
+          languageCode: 'ja',
+          script: [''],
+        },
         { languageCode: 'ko', script: [''] },
       ]
     : [],
@@ -54,6 +59,8 @@ const initaldata: TranscriptContextType = {
         page: 1,
       }
     : { language: '', page: 1 },
+  isLoading: false,
+  totalPages: 0,
 };
 
 type TranscriptActionContextType = {
@@ -66,6 +73,9 @@ type TranscriptActionContextType = {
   handleCurrentLangauge: (language: string) => void;
   handleNextPage: () => void;
   extractScript: (page: number) => string;
+  setIsLoading: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 };
 
 const TranscriptContext =
@@ -110,6 +120,8 @@ function TranscriptContextProvider({
     TranscriptContextType['current']
   >(initaldata.current);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleCurrentLangauge = (language: string) => {
     setCurrent((prev) =>
       language === prev.language
@@ -124,6 +136,20 @@ function TranscriptContextProvider({
       page: prev.page + 1,
     }));
   };
+
+  const totalPages = useMemo((): number => {
+    if (!transcript || !current.language) return 0;
+
+    const totalScripts = transcript
+      .filter(
+        ({ languageCode }) =>
+          getLanguageFullName(languageCode) ===
+          current.language,
+      )
+      .reduce((acc, { script }) => acc + script.length, 0);
+
+    return Math.ceil(totalScripts / 50);
+  }, [transcript, current.language]);
 
   const extractScript = useCallback(
     (page: number): string => {
@@ -151,8 +177,10 @@ function TranscriptContextProvider({
       transcript,
       metadata,
       current,
+      isLoading,
+      totalPages,
     }),
-    [transcript, metadata, current],
+    [transcript, metadata, current, isLoading],
   );
 
   const action = useMemo(
@@ -161,8 +189,14 @@ function TranscriptContextProvider({
       setCurrent,
       handleCurrentLangauge,
       handleNextPage,
+      setIsLoading,
     }),
-    [setCurrent, handleCurrentLangauge, handleNextPage],
+    [
+      setCurrent,
+      handleCurrentLangauge,
+      handleNextPage,
+      setIsLoading,
+    ],
   );
 
   useTitleChange(() => {
