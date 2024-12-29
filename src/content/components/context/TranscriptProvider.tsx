@@ -30,6 +30,7 @@ export type TranscriptContextType = {
   };
   isLoading: boolean;
   totalPages: number;
+  show?: boolean;
 };
 
 const initaldata: TranscriptContextType = {
@@ -61,6 +62,7 @@ const initaldata: TranscriptContextType = {
     : { language: '', page: 1 },
   isLoading: false,
   totalPages: 0,
+  show: true,
 };
 
 type TranscriptActionContextType = {
@@ -76,6 +78,7 @@ type TranscriptActionContextType = {
   setIsLoading: React.Dispatch<
     React.SetStateAction<boolean>
   >;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TranscriptContext =
@@ -121,6 +124,8 @@ function TranscriptContextProvider({
   >(initaldata.current);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [show, setShow] = useState(true);
 
   const handleCurrentLangauge = (language: string) => {
     setCurrent((prev) =>
@@ -178,9 +183,10 @@ function TranscriptContextProvider({
       metadata,
       current,
       isLoading,
+      show,
       totalPages,
     }),
-    [transcript, metadata, current, isLoading],
+    [transcript, metadata, current, isLoading, show],
   );
 
   const action = useMemo(
@@ -190,6 +196,7 @@ function TranscriptContextProvider({
       handleCurrentLangauge,
       handleNextPage,
       setIsLoading,
+      setShow,
     }),
     [
       setCurrent,

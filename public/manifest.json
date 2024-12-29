@@ -1,11 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Caption Retriever",
+  "name": "YouTube Video Script School",
   "version": "1.0.3",
-  "description": "YouTube Caption Retriever",
+  "description": "유튜브 비디오를 통해서 원하는 언어를 재밌게 공부해요 😎",
   "permissions": [
-    "storage",
-    "activeTab",
     "scripting"
   ],
   "background": {
@@ -14,15 +12,13 @@
   },
   "externally_connectable": {
     "matches": [
-      "https://*.prlc.kr/*",
-      "https://noting.prlc.kr/*"
+      "https://*.bamtoly.kr/*"
     ]
   },
   "content_scripts": [
     {
       "matches": [
-        "*://www.youtube.com/*",
-        "http://localhost:*/*"
+        "*://www.youtube.com/*"
       ],
       "type": "module",
       "js": ["content.js"],
@@ -32,17 +28,21 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": {
-      "16": "icons/icon.png",
-      "48": "icons/icon.png",
-      "128": "icons/icon.png"
+      "16": "icons/ram.png",
+      "48": "icons/ram.png",
+      "128": "icons/ram.png"
     }
+  },
+  "icons": {
+    "16": "icons/ram.png",
+    "48": "icons/ram.png",
+    "128": "icons/ram.png"
   },
   "web_accessible_resources": [
     {
       "resources": ["*"],
       "matches": [
-        "*://www.youtube.com/*",
-        "http://localhost:*/*"
+        "*://www.youtube.com/*"
       ]
     }
   ]

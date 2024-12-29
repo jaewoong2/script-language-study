@@ -10,7 +10,7 @@ class TranslateService {
   constructor() {
     axios.defaults.baseURL = import.meta.env.DEV
       ? 'http://localhost:3001'
-      : 'https://noting-api.prlc.kr';
+      : 'https://noting-api.bamtoly.com';
   }
 
   async getRecommend({

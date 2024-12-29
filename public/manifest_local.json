@@ -12,7 +12,7 @@
       "service_worker": "background.js"
     },
     "externally_connectable": {
-      "matches": ["https://*.prlc.kr/*", "https://noting.prlc.kr/*", "http://localhost:*/*"]
+      "matches": ["https://*.bamtoly.kr/*", "https://noting.bamtoly.kr/*", "http://localhost:*/*"]
     },
     "content_scripts": [
       {
@@ -20,8 +20,8 @@
           "http://localhost:*/*",
           "https://*.chatgpt.com/*",
           "https://chatgpt.com/*",
-          "https://*.prlc.kr/*",
-          "https://noting.prlc.kr/*"
+          "https://*.bamtoly.kr/*",
+          "https://noting.bamtoly.kr/*"
         ],
         "type": "module",
         "js": ["content.js"],

@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import TranscriptItem from '@/content/components/TranscriptItem';
-import { useTranscriptActionContext } from '@/content/components/context/TranscriptProvider';
+import {
+  useTranscriptActionContext,
+  useTranscriptContext,
+} from '@/content/components/context/TranscriptProvider';
 
 type Props = {
   contents?: { meaning: string; text: string }[];
@@ -12,13 +15,17 @@ const TranscriptContent = ({
   contents,
   isEndPage,
 }: Props) => {
+  const { show } = useTranscriptContext();
   const { handleNextPage } = useTranscriptActionContext();
 
   return (
     <>
       {contents?.map(({ meaning, text }, index) => (
         <li key={`${text}-${index}-content`}>
-          <TranscriptItem text={text} meaning={meaning} />
+          <TranscriptItem
+            text={text}
+            meaning={show ? meaning : ''}
+          />
         </li>
       ))}
       {contents && isEndPage && (

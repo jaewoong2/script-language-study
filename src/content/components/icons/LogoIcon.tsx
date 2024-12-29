@@ -18,7 +18,7 @@ const LogoIcon = ({ className, ...props }: Props) => {
     >
       <AvatarImage
         className="tw-object-contain"
-        src="https://images.prlc.kr/images/ram.png"
+        src="https://images.bamtoly.kr/images/ramram.png"
         alt="@shadcn"
       />
       <AvatarFallback className="tw-font-LilitaOne tw-bg-transparent tw-text-xs tw-font-semibold tw-text-orange-500 tw-drop-shadow-[1px_1px_1px_#606060da]">

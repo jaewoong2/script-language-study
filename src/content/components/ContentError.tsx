@@ -26,7 +26,7 @@ const ContentError = ({
 
   useEffect(() => {
     if (isSuccess) return;
-    if (failureCount > 1) return;
+    if (failureCount !== 1) return;
     if (!metadata) return;
     if (!extractedScript) return;
 
@@ -38,7 +38,14 @@ const ContentError = ({
       script: extractedScript,
       key: `${metadata.key}`,
     });
-  }, [current, page, metadata, extractedScript, status]);
+  }, [
+    current,
+    page,
+    metadata,
+    extractedScript,
+    status,
+    failureCount,
+  ]);
 
   if (status === 'pending' || isPending) {
     return (
